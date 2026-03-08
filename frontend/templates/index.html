@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LitReview AI — Autonomous Literature Review Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<!-- Noise overlay -->
+<div class="noise"></div>
+
+<!-- Background grid -->
+<div class="bg-grid"></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-bracket">[</span>
+      <span class="logo-text">LitReview<span class="logo-ai">AI</span></span>
+      <span class="logo-bracket">]</span>
+    </div>
+    <nav class="nav-pills">
+      <span class="pill active" data-tab="generate">Generate</span>
+      <span class="pill" data-tab="results" id="nav-results" style="display:none">Results</span>
+      <span class="pill" data-tab="about">About</span>
+    </nav>
+    <div class="header-tag">v1.0 · Powered by Groq</div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- ===== TAB: GENERATE ===== -->
+  <section class="tab-panel active" id="tab-generate">
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <span class="dot"></span> Multi-Agent Research System
+      </div>
+      <h1 class="hero-title">Autonomous Literature<br /><em>Review Generator</em></h1>
+      <p class="hero-sub">
+        Enter any research topic. Our AI pipeline — search, extract, summarize,
+        compare, and write — produces a publishable-quality literature review in minutes.
+      </p>
+    </div>
+
+    <!-- Input Card -->
+    <div class="card input-card">
+      <div class="card-header">
+        <span class="card-icon">⚗️</span>
+        <span class="card-title">Configure Review</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Research Topic</label>
+        <input
+          type="text"
+          id="topic-input"
+          class="form-input"
+          placeholder="e.g. Quantum Kolmogorov-Arnold Networks"
+          autocomplete="off"
+        />
+        <div class="topic-chips">
+          <span class="chip" data-topic="Quantum Kolmogorov-Arnold Networks">Quantum KANs</span>
+          <span class="chip" data-topic="Vision Transformers for Medical Image Segmentation">ViT Medical</span>
+          <span class="chip" data-topic="Retrieval Augmented Generation">RAG Systems</span>
+          <span class="chip" data-topic="Diffusion Models for Protein Structure Prediction">Protein Diffusion</span>
+          <span class="chip" data-topic="Graph Neural Networks for Drug Discovery">GNN Drug Discovery</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Number of Papers <span id="paper-count-display">10</span></label>
+        <div class="slider-wrapper">
+          <span class="slider-min">3</span>
+          <input type="range" id="paper-count" class="form-slider" min="3" max="20" value="10" />
+          <span class="slider-max">20</span>
+        </div>
+        <p class="form-hint">More papers = more comprehensive review, but takes longer</p>
+      </div>
+
+      <button class="btn-generate" id="btn-generate" onclick="startReview()">
+        <span class="btn-icon">⚡</span>
+        Generate Literature Review
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Pipeline Visualization -->
+    <div class="pipeline-section">
+      <h2 class="section-title">How It Works</h2>
+      <div class="pipeline">
+        <div class="pipeline-step" data-step="search">
+          <div class="step-icon">🔍</div>
+          <div class="step-content">
+            <div class="step-num">01</div>
+            <div class="step-name">Search Agent</div>
+            <div class="step-desc">Queries Semantic Scholar with AI-expanded search terms</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step" data-step="pdf">
+          <div class="step-icon">📄</div>
+          <div class="step-content">
+            <div class="step-num">02</div>
+            <div class="step-name">PDF Agent</div>
+            <div class="step-desc">Extracts full text from open-access PDFs &amp; ArXiv</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step" data-step="summarize">
+          <div class="step-icon">🧠</div>
+          <div class="step-content">
+            <div class="step-num">03</div>
+            <div class="step-name">Summarization Agent</div>
+            <div class="step-desc">Extracts methods, results, limitations per paper</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step" data-step="compare">
+          <div class="step-icon">⚖️</div>
+          <div class="step-content">
+            <div class="step-num">04</div>
+            <div class="step-name">Comparison Agent</div>
+            <div class="step-desc">Identifies themes, gaps, and cross-paper relationships</div>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step" data-step="write">
+          <div class="step-icon">✍️</div>
+          <div class="step-content">
+            <div class="step-num">05</div>
+            <div class="step-name">Writer Agent</div>
+            <div class="step-desc">Produces Markdown + LaTeX literature review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: PROGRESS ===== -->
+  <section class="tab-panel" id="tab-progress">
+    <div class="progress-header">
+      <h2 class="progress-title">Generating Review</h2>
+      <p class="progress-topic" id="progress-topic-label"></p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar-wrapper">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+      <span class="progress-percent" id="progress-percent">0%</span>
+    </div>
+
+    <!-- Current agent -->
+    <div class="current-agent-card">
+      <div class="agent-pulse"></div>
+      <span id="current-agent-label">Initializing pipeline...</span>
+    </div>
+
+    <!-- Papers found -->
+    <div id="papers-found-section" style="display:none" class="papers-found-section">
+      <div class="papers-found-title">Papers Selected</div>
+      <div id="papers-found-list" class="papers-found-list"></div>
+    </div>
+
+    <!-- Log terminal -->
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="terminal-title">Agent Log</span>
+      </div>
+      <div class="terminal-body" id="log-terminal"></div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: RESULTS ===== -->
+  <section class="tab-panel" id="tab-results">
+    <div class="results-header">
+      <div class="results-meta">
+        <h2 class="results-title" id="results-title">Literature Review</h2>
+        <div class="results-stats" id="results-stats"></div>
+      </div>
+      <div class="results-actions">
+        <button class="btn-action" onclick="downloadMarkdown()">
+          <span>⬇</span> Download .md
+        </button>
+        <button class="btn-action" onclick="downloadLatex()">
+          <span>⬇</span> Download .tex
+        </button>
+        <button class="btn-action btn-secondary" onclick="copyMarkdown()">
+          <span>📋</span> Copy
+        </button>
+        <button class="btn-action btn-secondary" onclick="newReview()">
+          <span>✚</span> New Review
+        </button>
+      </div>
+    </div>
+
+    <!-- View Toggle -->
+    <div class="view-toggle">
+      <button class="toggle-btn active" id="btn-preview" onclick="switchView('preview')">Preview</button>
+      <button class="toggle-btn" id="btn-markdown" onclick="switchView('markdown')">Markdown</button>
+      <button class="toggle-btn" id="btn-latex" onclick="switchView('latex')">LaTeX</button>
+    </div>
+
+    <div class="result-content-wrapper">
+      <!-- Preview view -->
+      <div id="view-preview" class="result-view active">
+        <div class="review-rendered" id="review-rendered"></div>
+      </div>
+      <!-- Raw markdown -->
+      <div id="view-markdown" class="result-view">
+        <pre class="code-block" id="review-markdown-raw"></pre>
+      </div>
+      <!-- LaTeX -->
+      <div id="view-latex" class="result-view">
+        <pre class="code-block" id="review-latex-raw"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB: ABOUT ===== -->
+  <section class="tab-panel" id="tab-about">
+    <div class="about-content">
+      <h2 class="section-title">About LitReview AI</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🏗️</div>
+          <h3>Architecture</h3>
+          <p>A fully autonomous multi-agent system built with FastAPI. Each agent handles a distinct pipeline stage, communicating through a shared state manager.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🔬</div>
+          <h3>Data Sources</h3>
+          <p>Papers sourced from <strong>Semantic Scholar</strong> — 200M+ academic papers. Full text extracted from open-access PDFs and ArXiv preprints.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">⚡</div>
+          <h3>AI Engine</h3>
+          <p>Powered by <strong>Groq</strong> with Llama 3.3 70B. Ultra-fast inference enables processing 10+ papers in under 3 minutes.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📖</div>
+          <h3>Output Quality</h3>
+          <p>Produces structured reviews with proper citations, thematic analysis, research gap identification, and export to both Markdown and LaTeX.</p>
+        </div>
+      </div>
+      <div class="tech-stack">
+        <div class="tech-title">Tech Stack</div>
+        <div class="tech-tags">
+          <span>FastAPI</span>
+          <span>Python 3.11+</span>
+          <span>Groq API</span>
+          <span>Llama 3.3 70B</span>
+          <span>Semantic Scholar API</span>
+          <span>PyPDF</span>
+          <span>httpx</span>
+          <span>Pydantic</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
