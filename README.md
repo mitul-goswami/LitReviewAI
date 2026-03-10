@@ -1,6 +1,6 @@
 # 🔬 LitReview AI — Autonomous Literature Review Generator
 
-> A publishable-quality multi-agent system that autonomously generates academic literature reviews from a single topic input.
+> A publishable quality multi-agent system that autonomously generates academic literature reviews from a single topic input.
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)
