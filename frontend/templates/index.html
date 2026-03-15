@@ -195,6 +195,9 @@
         <button class="btn-action" onclick="downloadLatex()">
           <span>⬇</span> Download .tex
         </button>
+        <button class="btn-action" onclick="downloadApa()" title="APA 7th Edition References">
+          <span>⬇</span> Download APA Refs
+        </button>
         <button class="btn-action btn-secondary" onclick="copyMarkdown()">
           <span>📋</span> Copy
         </button>
@@ -209,6 +212,7 @@
       <button class="toggle-btn active" id="btn-preview" onclick="switchView('preview')">Preview</button>
       <button class="toggle-btn" id="btn-markdown" onclick="switchView('markdown')">Markdown</button>
       <button class="toggle-btn" id="btn-latex" onclick="switchView('latex')">LaTeX</button>
+      <button class="toggle-btn" id="btn-apa" onclick="switchView('apa')">APA References</button>
     </div>
 
     <div class="result-content-wrapper">
@@ -223,6 +227,16 @@
       <!-- LaTeX -->
       <div id="view-latex" class="result-view">
         <pre class="code-block" id="review-latex-raw"></pre>
+      </div>
+      <!-- APA References -->
+      <div id="view-apa" class="result-view">
+        <div class="apa-header">
+          <h3 class="apa-title">References <span class="apa-badge">APA 7th Edition</span></h3>
+          <button class="btn-action btn-secondary" onclick="copyApa()" style="margin-left:auto">
+            <span>📋</span> Copy All
+          </button>
+        </div>
+        <div class="apa-list" id="review-apa-raw"></div>
       </div>
     </div>
   </section>
