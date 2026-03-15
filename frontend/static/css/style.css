@@ -608,3 +608,176 @@ body {
   .results-header { flex-direction: column; }
   .header-tag { display: none; }
 }
+
+/* ── APA References View ───────────────────────────────────────────────── */
+.apa-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.apa-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.apa-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.apa-list {
+  padding: 1.5rem 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.apa-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.3rem 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.apa-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0 0 1.5rem 0;
+}
+
+.apa-entry {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  line-height: 1.7;
+}
+
+.apa-entry:last-child {
+  border-bottom: none;
+}
+
+.apa-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 600;
+  padding-top: 0.1rem;
+}
+
+.apa-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+
+.apa-text em {
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.apa-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ── Retry Card ────────────────────────────────────────────────────────────── */
+.retry-card {
+  display: none;
+  align-items: flex-start;
+  gap: 1.2rem;
+  background: color-mix(in srgb, var(--red, #e05252) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--red, #e05252) 35%, transparent);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin-top: 1.5rem;
+}
+
+.retry-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.retry-info {
+  flex: 1;
+}
+
+.retry-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.retry-msg {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.retry-checkpoint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.retry-checkpoint strong {
+  color: var(--accent);
+}
+
+.retry-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.btn-retry {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.btn-retry:hover { opacity: 0.85; }
+
+.btn-retry-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btn-retry-secondary:hover {
+  background: var(--surface-2, rgba(255,255,255,0.05));
+  opacity: 1;
+}
