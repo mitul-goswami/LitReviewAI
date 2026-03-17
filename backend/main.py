@@ -1,7 +1,5 @@
 """
 LitReview AI — FastAPI Backend
-
-IMPORTANT: load_dotenv MUST be called before any other local imports.
 """
 import os
 from pathlib import Path
