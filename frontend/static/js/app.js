@@ -296,12 +296,21 @@ function _logLine(log) {
 function _updatePapers(papers) {
   if (!papers?.length) return;
   document.getElementById('papers-found-section').style.display = 'block';
-  document.getElementById('papers-found-list').innerHTML = papers.map(p =>
-    `<div class="paper-chip">
+  document.getElementById('papers-found-list').innerHTML = papers.map(p => {
+    const hasUrl = p.url && p.url.trim();
+    const viewBtn = hasUrl
+      ? `<a class="paper-chip-link" href="${escHtml(p.url)}" target="_blank" rel="noopener noreferrer" title="View paper">
+           <span class="paper-chip-link-icon">↗</span> View
+         </a>`
+      : '';
+    const venue = p.venue ? `<span class="paper-chip-venue">${escHtml(p.venue)}</span>` : '';
+    return `<div class="paper-chip">
       <span class="paper-chip-year">${p.year || '?'}</span>
-      <span>${escHtml(p.title || 'Unknown title')}</span>
-    </div>`
-  ).join('');
+      <span class="paper-chip-title">${escHtml(p.title || 'Unknown title')}</span>
+      ${venue}
+      ${viewBtn}
+    </div>`;
+  }).join('');
 }
 
 // ─── Failure + retry ─────────────────────────────────────────────────────────
