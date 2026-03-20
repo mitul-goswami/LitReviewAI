@@ -24,7 +24,6 @@ The pipeline saves its output after each stage:
 On retry, run_pipeline() reads the checkpoint and resumes from the next stage.
 """
 from __future__ import annotations
-
 import asyncio
 import json
 import logging
